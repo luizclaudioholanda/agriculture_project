@@ -6,12 +6,11 @@ import { Farm } from '../farm/entities/farm.entity';
 
 @Injectable()
 export class StateService {
-
   constructor(
     @InjectRepository(State)
     private stateRepository: Repository<State>,
-  ) { }
-  
+  ) {}
+
   async create(state: State) {
     const result = await this.stateRepository.insert(state);
     const { id } = result.identifiers[0];
@@ -19,41 +18,39 @@ export class StateService {
   }
 
   async findAll() {
-    return await this.stateRepository.find()
+    return await this.stateRepository.find();
   }
 
   async findOne(id: number): Promise<State> {
-
     const state = await this.stateRepository.findOne({
-      where: { id }
+      where: { id },
     });
 
     return state;
   }
 
   async update(id: number, updateState: State) {
-    let state = {...await this.findOne(id), name: updateState.name };
+    const state = { ...(await this.findOne(id)), name: updateState.name };
     await this.stateRepository.save(state);
 
     return id;
   }
 
   async remove(id: number) {
-    let state = { ...await this.findOne(id)};
+    const state = { ...(await this.findOne(id)) };
     await this.stateRepository.delete(state);
 
     return id;
   }
 
-  async totalFarmByState(){
+  async totalFarmByState() {
     const result = await this.stateRepository
-                          .createQueryBuilder('state')
-                          .select('state.name')
-                          .addSelect("COUNT('state.id')","totalFarms")
-                          .innerJoin(Farm, "farm", "state.id = farm.stateId")
-                          .groupBy("state.name")
-                          .getRawMany();
+      .createQueryBuilder('state')
+      .select('state.name')
+      .addSelect("COUNT('state.id')", 'totalFarms')
+      .innerJoin(Farm, 'farm', 'state.id = farm.stateId')
+      .groupBy('state.name')
+      .getRawMany();
     return result;
   }
-
 }

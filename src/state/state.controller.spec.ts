@@ -13,10 +13,13 @@ describe('StateController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [StateController],
-      providers: [StateService,{
-        provide: getRepositoryToken(State),
-        useClass: mockRepository
-      }],
+      providers: [
+        StateService,
+        {
+          provide: getRepositoryToken(State),
+          useClass: mockRepository,
+        },
+      ],
     }).compile();
 
     controller = module.get<StateController>(StateController);
@@ -28,14 +31,13 @@ describe('StateController', () => {
   });
 
   it('should make a GET ALL', async () => {
-    const result: State[] = [{ id: 1, name: "São Paulo", city: [], farm: []}];
-    const promise = new Promise<State[]>((resolve, reject) => resolve(result))
+    const result: State[] = [{ id: 1, name: 'São Paulo', city: [], farm: [] }];
+    const promise = new Promise<State[]>((resolve, reject) => resolve(result));
 
-    const spy = jest.spyOn(service, "findAll").mockResolvedValue(promise);
-    const serviceResult = await controller.findAll()
+    const spy = jest.spyOn(service, 'findAll').mockResolvedValue(promise);
+    const serviceResult = await controller.findAll();
 
     expect(spy).toHaveBeenCalled();
-    expect(serviceResult).toEqual(result)
+    expect(serviceResult).toEqual(result);
   });
-
 });

@@ -17,18 +17,18 @@
 //   synchronize: false
 // });
 
-import { DataSource } from "typeorm";
+import { DataSource } from 'typeorm';
 
 export const connectionSource = new DataSource({
-    migrationsTableName: 'migrations',
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'agricultureChangeIt',
-    database: 'agriculture',
-    entities: ['src/**/**.entity{.ts,.js}'],
-    migrations: ['src/migration/*{.ts,.js}'],
-    logging: false,
-    synchronize: false,
+  migrationsTableName: 'migrations',
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'agricultureChangeIt',
+  database: 'agriculture',
+  entities: ['src/**/**.entity{.ts,.js}'],
+  migrations: ['src/migration/*{.ts,.js}'],
+  logging: false,
+  synchronize: false,
 });

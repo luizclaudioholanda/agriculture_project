@@ -24,7 +24,7 @@ services:
     ports:
       - "16543:80"
     depends_on:
-      - language-sample-db
+      - agriculture_server
     networks:
       - postgres-compose-network
 
